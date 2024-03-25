@@ -1,4 +1,4 @@
 torch
 ultralytics
 streamlit
-PIL
+Pillow
