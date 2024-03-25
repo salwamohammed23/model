@@ -5,7 +5,7 @@ import streamlit as st
 from ultralytics import YOLO
 
 # Replace the relative path to your weight file
-model_path = 'https://github.com/salwamohammed23/model/blob/main/model_-%2025%20march%202024%202_53.pt'
+model_path = 'model_- 25 march 2024 2_53.pt'
 
 # Setting page layout
 st.set_page_config(
