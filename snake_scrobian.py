@@ -38,7 +38,7 @@ def load_model(model_path):
 
 
 # Replace the relative path to your weight file
-model_path = 'model_- 25 march 2024 2_53.pt'
+#model_path = 'model_- 25 march 2024 2_53.pt'
 
 # Setting page layout
 st.set_page_config(
