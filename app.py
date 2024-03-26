@@ -25,7 +25,7 @@ st.sidebar.header("ML Model Config")
 
 # Model Options
 model_type = st.sidebar.radio(
-    "Select Task", ['Detection', 'Segmentation'])
+    "Select Task", ['Detection'])
 
 confidence = float(st.sidebar.slider(
     "Select Model Confidence", 25, 100, 40)) / 100
@@ -45,7 +45,7 @@ except Exception as ex:
 
 st.sidebar.header("Image/Video Config")
 source_radio = st.sidebar.radio(
-    "Select Source", settings.SOURCES_LIST)
+    "Select Source",settings.WEBCAM)
 
 source_img = None
 # If image is selected
@@ -94,17 +94,17 @@ if source_radio == settings.IMAGE:
                     # st.write(ex)
                     st.write("No image is uploaded yet!")
 
-elif source_radio == settings.VIDEO:
-    helper.play_stored_video(confidence, model)
+#elif source_radio == settings.VIDEO:
+    #helper.play_stored_video(confidence, model)
 
 elif source_radio == settings.WEBCAM:
     helper.play_webcam(confidence, model)
 
-elif source_radio == settings.RTSP:
-    helper.play_rtsp_stream(confidence, model)
+#elif source_radio == settings.RTSP:
+    #helper.play_rtsp_stream(confidence, model)
 
-elif source_radio == settings.YOUTUBE:
-    helper.play_youtube_video(confidence, model)
+#elif source_radio == settings.YOUTUBE:
+  # helper.play_youtube_video(confidence, model)
 
 else:
     st.error("Please select a valid source type!")
