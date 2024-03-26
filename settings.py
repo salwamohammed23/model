@@ -34,8 +34,8 @@ VIDEOS_DICT = {
 }
 
 # ML Model config
-
-DETECTION_MODEL = ROOT/'model_- 25 march 2024 2_53.pt'
+MODEL_DIR = ROOT / 'm'
+DETECTION_MODEL = MODEL_DIR / 'model_- 25 march 2024 2_53.pt'
 # In case of your custome model comment out the line above and
 # Place your custom model pt file name at the line below 
 # DETECTION_MODEL = MODEL_DIR / 'my_detection_model.pt'
