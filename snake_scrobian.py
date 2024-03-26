@@ -79,7 +79,7 @@ with col1:
                  )
 
 try:
-    model = YOLO(model_path)
+    model = YOLO(DETECTION_MODEL)
 except Exception as ex:
     st.error(
         f"Unable to load model. Check the specified path: {model_path}")
