@@ -44,8 +44,7 @@ except Exception as ex:
     st.error(ex)
 
 st.sidebar.header("Image/Video Config")
-source_radio = st.sidebar.radio(
-    "Select Source",settings.WEBCAM)
+source_radio = st.sidebar.radio(settings.WEBCAM)
 
 source_img = None
 # If image is selected
