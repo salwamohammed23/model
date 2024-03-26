@@ -18,7 +18,7 @@ ROOT = ROOT.relative_to(Path.cwd())
 
 # ML Model config
 MODEL_DIR = ROOT / 'm'
-DETECTION_MODEL = MODEL_DIR / 'model_- 25 march 2024 2_53.ptt'
+DETECTION_MODEL = MODEL_DIR / 'model_- 25 march 2024 2_53.pt'
 
 
 
