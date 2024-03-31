@@ -6,7 +6,7 @@ import streamlit as st
 from ultralytics import YOLO
 from streamlit_image_comparison import image_comparison
 
-model = YOLO('m/model_- 25 march 2024 2_53.pt')
+model = YOLO('model_- 25 march 2024 2_53.pt')
 
 st.title("Image Segmentation with YOLOv8: A Web Integration")
 st.subheader("Implementing for Image Segmentation and Object Detection")
