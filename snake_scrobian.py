@@ -23,7 +23,7 @@ st.write("Image segmentation is a critical task in computer vision that involves
 #st.markdown(link, unsafe_allow_html=True)
 
 def save_uploadedfile(uploadedfile):
-    with open(os.path.join("./media-directory/", "selfie.jpg"), "wb") as f:
+    with open(os.path.join("./media-directory/", "ALL-OF-MY-SCORPIONS-mp4_001173520_png.rf.268a30032134ccc8d2ecc0fc4857ffe6.jpg"), "wb") as f:
         f.write(uploadedfile.getbuffer())
 
 def convert_to_jpg(uploaded_image):
@@ -40,7 +40,7 @@ st.markdown('##### Segmented Pieces')
 
 ## Placeholder Image
 parent_media_path = "media-directory"
-img_file = 'bus.jpg'
+img_file = '-_-mp4_000013700_png.rf.161233bdc872c6666c8e314b15cce758.jpg'
 
 ## Application States
 APPLICATION_MODE = st.sidebar.selectbox("Our Options",
