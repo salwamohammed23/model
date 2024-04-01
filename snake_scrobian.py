@@ -66,9 +66,9 @@ if APPLICATION_MODE == "Take Picture":
             ## Function to save image
             save_uploadedfile(picture)
             st.sidebar.success("Saved File")
-            selfie_img = os.path.join(parent_media_path, "/selfie.jpg")
+            selfie_img = os.path.join(parent_media_path, "/-_-mp4_000013700_png.rf.161233bdc872c6666c8e314b15cce758.jpg")
         st.write("Click on **Clear photo** to retake picture")
-        img_file = './media-directory/selfie.jpg'
+        img_file = './media-directory/-_-mp4_000013700_png.rf.161233bdc872c6666c8e314b15cce758.jpg'
     st.divider()
 
 elif APPLICATION_MODE == "Upload Picture":
