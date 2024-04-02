@@ -30,10 +30,10 @@ with tab1:
              uploaded_image_path = os.path.join(parent_media_path, "uploaded_image.jpg")
              im.save(uploaded_image_path)
          
-         st.divider()
+         #st.divider()
          
-         st.markdown('')
-         st.markdown('##### Segmented Pieces')
+         #st.markdown('')
+         #st.markdown('##### Segmented Pieces')
          
          ## Placeholder Image
          parent_media_path = "media-directory"
@@ -46,14 +46,7 @@ with tab1:
          
          ## Selfie Image
          if APPLICATION_MODE == "Take Picture":
-             st.sidebar.write(
-                 """
-                     A computer aided application that segments your input image, built on 
-                     the powerful YOLOv8 object detection algorithm developed by *ultralytics*.
-         
-                     Simply take a selfie and it gets segmentated in real time.
-                 """
-             )
+)
              picture = st.camera_input("Take a picture")
              st.markdown('')
              if picture:
@@ -146,14 +139,14 @@ with tab1:
          else:
              st.sidebar.warning("Unable to id Distinct items - Please retry with a clearer Image")
          
-         st.markdown('')
-         st.markdown('')
-         st.markdown('')
-         st.markdown('')
-         st.markdown('')
-         st.markdown('')
-         st.sidebar.divider()
-         st.sidebar.info("Made with ❤ by the AfroLogicInsect")
+         #st.markdown('')
+         #st.markdown('')
+         #st.markdown('')
+         #st.markdown('')
+         #st.markdown('')
+         #st.markdown('')
+         #st.sidebar.divider()
+         #st.sidebar.info("Made with ❤ by the AfroLogicInsect")
 with tab2:
          st.title("Detection with YOLO_nas")
 with tab3: 
