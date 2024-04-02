@@ -10,7 +10,7 @@ st.title('Object Detection with YOLO on Webcam')
 model = YOLO("best.pt")
 
 # object classes
-classNames = ["person", "bicycle", "car", ...]  # قم بإكمال القائمة classNames
+classNames = ["person", "bicycle", "car"]  # قم بإكمال القائمة classNames
 
 # function to detect objects
 def detect_objects(frame):
