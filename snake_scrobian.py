@@ -1,39 +1,58 @@
+import streamlit as st
 from ultralytics import YOLO
 import cv2
-import cvzone
-import math
-from streamlit_webrtc import webrtc_streamer,RTCConfiguration, WebRtcMode
-import av
-from twilio_tokens import get_ice_servers
+import math 
 
-model = YOLO('best.pt')
+# page title
+st.title('Object Detection with YOLO on Webcam')
 
-# cap = cv2.VideoCapture(0)
-# cap.set(3,640) # width
-# cap.set(4,360) # height
+# model
+model = YOLO("yolo-Weights/yolov8n.pt")
 
-class VideoProcess():
-    def recv(self, frame):
-        frm = frame.to_ndarray(format='bgr24')
-        results = model(frm, stream=True, verbose=False)
-        for r in results:
-            boxes = r.boxes
-            for box in boxes:
-                # opencv
-                x1, y1, x2, y2 = box.xyxy[0]
-                x1, y1, x2, y2 = int(x1), int(y1), int(x2), int(y2)
-                # cv2.rectangle(img, (x1, y1), (x2, y2), (0,200,0), 3)
+# object classes
+classNames = ["person", "bicycle", "car", ...]  # قم بإكمال القائمة classNames
 
-                # cvzone
-                w, h = x2-x1, y2-y1
-                cvzone.cornerRect(frm, (x1, y1, w, h))
+# function to detect objects
+def detect_objects(frame):
+    results = model(frame, stream=True)
 
-                conf = math.ceil(box.conf[0])
-                # Class Name
-                cls = int(box.cls[0])
+    for r in results:
+        boxes = r.boxes
 
-                cvzone.putTextRect(frm, f'{classNames[cls]} {conf}', (max(0, x1), max(35, y1)), scale=1, thickness=1)
-        return av.VideoFrame.from_ndarray(frm, format='bgr24')
+        for box in boxes:
+            # bounding box
+            x1, y1, x2, y2 = box.xyxy[0]
+            x1, y1, x2, y2 = int(x1), int(y1), int(x2), int(y2) # convert to int values
 
-classNames = ["snake", "scrobian" ]
+            # confidence
+            confidence = math.ceil((box.conf[0]*100))/100
 
+            # class name
+            cls = int(box.cls[0])
+
+            # object details
+            cv2.rectangle(frame, (x1, y1), (x2, y2), (255, 0, 255), 3)
+            cv2.putText(frame, classNames[cls], (x1, y1), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2)
+
+    return frame
+
+# start webcam
+cap = cv2.VideoCapture(0)
+cap.set(3, 640)
+cap.set(4, 480)
+
+# run the Streamlit app
+while True:
+    success, img = cap.read()
+
+    # call the detect_objects function
+    img_with_objects = detect_objects(img)
+
+    # display the image in Streamlit
+    st.image(img_with_objects, channels="BGR")
+
+    if cv2.waitKey(1) == ord('q'):
+        break
+
+cap.release()
+st.write('Object Detection ended')
