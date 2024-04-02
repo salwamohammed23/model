@@ -30,7 +30,7 @@ with tab1:
              uploaded_image_path = os.path.join(parent_media_path, "uploaded_image.jpg")
              im.save(uploaded_image_path)
          
-         #st.divider()
+         st.divider()
          
          #st.markdown('')
          #st.markdown('##### Segmented Pieces')
@@ -46,7 +46,7 @@ with tab1:
          
          ## Selfie Image
          if APPLICATION_MODE == "Take Picture":
-)
+
              picture = st.camera_input("Take a picture")
              st.markdown('')
              if picture:
