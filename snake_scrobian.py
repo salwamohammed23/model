@@ -7,7 +7,7 @@ import math
 st.title('Object Detection with YOLO on Webcam')
 
 # model
-model = YOLO("yolo-Weights/yolov8n.pt")
+model = YOLO("best.pt")
 
 # object classes
 classNames = ["person", "bicycle", "car", ...]  # قم بإكمال القائمة classNames
