@@ -1,102 +1,100 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Fri Oct 27 21:33:51 2023
-
-@author: Abhay
-"""
-
-#installing the required libraries
-#pip install torch
-#pip install ultralytics
-#pip install streamlit
-import PIL
+import os
+import cv2
+from PIL import Image
+import pandas as pd
 import streamlit as st
 from ultralytics import YOLO
-model_path="model_- 25 march 2024 2_53.pt"
-max_detections = 1000
+from streamlit_image_comparison import image_comparison
 
-#setting page layout
-st.set_page_config(
-    page_title="Object Counting",
-    page_icon="🤖",
-    layout="wide",
-    initial_sidebar_state="expanded",
+model = YOLO('best.pt')
+# Split the page into two tabs
+tab1, tab2, tab3= st.tabs(["Detection with YOLOv8", "Detection with YOLO_nas", "Detection with YOLOv9"])
+
+with tab1:
+    st.title("Detection with YOLOv8")
+    st.subheader("Implementing Detection on snake and scrobian dataset")
+    st.write("------")
+
+    def save_uploadedfile(uploadedfile):
+        with open(os.path.join("./media-directory/", "uploaded_image.jpg"), "wb") as f:
+            f.write(uploadedfile.getbuffer())
+
+    st.divider()
+
+    APPLICATION_MODE = st.sidebar.selectbox("Our Options", ["Take Picture", "Upload Picture"])
+
+    if APPLICATION_MODE == "Take Picture":
+        picture = st.camera_input("Take a picture")
+        st.markdown('')
+        if picture:
+            st.write("Showing the picture taken:")
+            st.image(picture, caption="Selfie")
+            if st.button("Segment!"):
+                save_uploadedfile(picture)
+                st.sidebar.success("Saved File")
+        st.write("Click on **Clear photo** to retake picture")
+
+        if os.path.exists("./media-directory/uploaded_image.jpg"):
+            img_file = "./media-directory/uploaded_image.jpg"
+            results = model(img_file)
+            img = cv2.imread(img_file)
+
+            names_list = []
+            for result in results:
+                boxes = result.boxes.cpu().numpy()
+                for box in boxes:
+                    r = box.xyxy[0].astype(int)
+                    rect = cv2.rectangle(img, tuple(r[:2]), tuple(r[2:]), (255, 55, 255), 2)
+                st.image(rect)
+
+    elif APPLICATION_MODE == "Upload Picture":
+        uploaded_file = st.sidebar.file_uploader("Drop a JPG/PNG file", accept_multiple_files=False, type=['jpg', 'png'])
+        if uploaded_file is not None:
+            new_file_name = "uploaded_image.jpg"
+            with open(os.path.join("./media-directory/", new_file_name), "wb") as f:
+                f.write(uploaded_file.getbuffer())
+            img_file = os.path.join("./media-directory/", new_file_name)
+            st.sidebar.success("File saved successfully")
+
+        if os.path.exists(img_file):
+            results = model(img_file)
+            img = cv2.imread(img_file)
+
+            names_list = []
+            for result in results:
+                boxes = result.boxes.cpu().numpy()
+                for box in boxes:
+                    r = box.xyxy[0].astype(int)
+                    rect = cv2.rectangle(img, tuple(r[:2]), tuple(r[2:]), (255, 55, 255), 2)
+                st.image(rect)
+
+        else:
+            st.sidebar.write("You are using a placeholder image. Upload your Image to explore further.")
+
+    st.sidebar.markdown('')
+    st.markdown('##### Slider of Uploaded Image and Segments')
+    image_comparison(
+        img1=img_file,
+        img2=img,
+        label1="Actual Image",
+        label2="Segmented Image",
+        width=700,
+        starting_position=50,
+        show_labels=True,
+        make_responsive=True,
+        in_memory=True
     )
 
+    st.sidebar.markdown('#### Distribution of identified items')
+    if len(names_list) > 0:
+        df_x = pd.DataFrame(names_list)
+        summary_table = df_x[0].value_counts().rename_axis('unique_values').reset_index(name='counts')
+        st.sidebar.dataframe(summary_table, use_container_width=st.session_state.use_container_width)
+    else:
+        st.sidebar.warning("Unable to identify distinct items - Please retry with a clearer Image")
 
-#creating sidebar
-with st.sidebar:
-    st.header=("Image_config")
-    #adding file uploader to side bar for selecting images
-    source_img=st.file_uploader(
-        "Upload the Image", type=("jpg","png","jpeg","bmp","webp"))
-    #model options
-    confidence=float(st.slider(
-        "select model confidence", 25, 100, 40)) / 100
-#creating main page heading
-st.title(":red[Object Detection]")
-st.caption("Upload a photo .")
-st.caption('Then click the [Detect Objects] button and check the result.')
-# Creating two columns on the main page
-col1, col2 = st.columns(2)
-# Adding image to the first column if image is uploaded
-with col1:
-    if source_img:
-        # Opening the uploaded image
-        uploaded_image = PIL.Image.open(source_img)
-        # Adding the uploaded image to the page with a caption
-        st.image(source_img,
-                 caption="Uploaded Image",
-                 use_column_width=True
-                 )
-try:
-    model = YOLO(model_path)
-except Exception as ex:
-    st.error(
-        f"Unable to load model. Check the specified path: {model_path}")
-    st.error(ex)
-if st.sidebar.button('Detect Objects'):
-    res = model.predict(uploaded_image,
-                        conf=confidence, max_det=1000,
-                        )
-    boxes = res[0].boxes
-    res_plotted = res[0].plot()[:, :, ::-1]
-    with col2:
-        st.image(res_plotted,
-                 caption='Detected Image',
-                 use_column_width=True 
-                 )
-        boxes = res[0].boxes
-        num_boxes = len(boxes)
-        if num_boxes == 0:
-            st.error("No objects detected in the image.")
-        else:
-            st.write(f"Number of detected objects: {num_boxes}")  # Display the total count
-            # Create a dictionary to count each class separately
-            class_counts = {}
-            class_name_map = {
-                0: 'Class 1' ,
-                1: 'Class 2' ,
-                2: 'Class 3' ,
-                
-            }
-            for box in boxes:
-                # Access the last element of the tensor to get the class label
-                class_label = int(box.cls)  # Convert to integer
-                class_name = class_name_map.get(class_label , "Unknown")
-                if class_name not in class_counts:
-                    class_counts[class_name] = 1
-                else:
-                    class_counts[class_name] += 1
-            st.write("Count of each classes detected:")
-            for class_name, count in class_counts.items():
-                st.write(f":green[{class_name}:] :- {count}")
-        
-        try:
-            with st.expander("Detection Results"):
-                for box in boxes:
-                    st.write(box.xywh)
-        except Exception as ex:
-            st.write("No image is uploaded yet!")
-    
-        
+with tab2:
+    st.title("Detection with YOLO_nas")
+
+with tab3:
+    st.title("Detection with YOLOv9")
