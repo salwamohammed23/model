@@ -155,6 +155,8 @@ with tab1:
          st.sidebar.divider()
          st.sidebar.info("Made with ❤ by the AfroLogicInsect")
 with tab2:
-with tab3:         
+         st.title("Detection with YOLO_nas")
+with tab3: 
+         st.title("Detection with YOLOv9")
          
          
