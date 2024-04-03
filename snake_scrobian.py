@@ -1,7 +1,9 @@
 import streamlit as st
+import numpy as np
 from ultralytics import YOLO
 import cv2
-import math 
+import math
+from PIL import Image
 
 # page title
 st.title('Object Detection with YOLO on Webcam')
@@ -22,10 +24,10 @@ def detect_objects(frame):
         for box in boxes:
             # bounding box
             x1, y1, x2, y2 = box.xyxy[0]
-            x1, y1, x2, y2 = int(x1), int(y1), int(x2), int(y2) # convert to int values
+            x1, y1, x2, y2 = int(x1), int(y1), int(x2), int(y2)  # convert to int values
 
             # confidence
-            confidence = math.ceil((box.conf[0]*100))/100
+            confidence = math.ceil((box.conf[0] * 100)) / 100
 
             # class name
             cls = int(box.cls[0])
@@ -48,8 +50,11 @@ while True:
     # call the detect_objects function
     img_with_objects = detect_objects(img)
 
+    # convert OpenCV image to PIL image
+    img_pil = Image.fromarray(cv2.cvtColor(img_with_objects, cv2.COLOR_BGR2RGB))
+
     # display the image in Streamlit
-    st.image(img_with_objects, channels="BGR")
+    st.image(img_pil, channels="RGB")
 
     if cv2.waitKey(1) == ord('q'):
         break
