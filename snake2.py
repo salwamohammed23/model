@@ -34,8 +34,8 @@ with tab1:
                 st.sidebar.success("Saved File")
         st.write("Click on **Clear photo** to retake picture")
 
-        if os.path.exists("./media-directory/uploaded_image.jpg"):
-            img_file = "./media-directory/uploaded_image.jpg"
+        if os.path.exists("./media-directory/media-directory/ALL-OF-MY-SCORPIONS-mp4_001173520_png.rf.268a30032134ccc8d2ecc0fc4857ffe6.jpg"):
+            img_file = "./media-directory/media-directory/ALL-OF-MY-SCORPIONS-mp4_001173520_png.rf.268a30032134ccc8d2ecc0fc4857ffe6.jpg"
             results = model(img_file)
             img = cv2.imread(img_file)
 
