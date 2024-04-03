@@ -1,64 +1,41 @@
-# Python In-built packages
-from pathlib import Path
-import PIL
-
-# External packages
 import streamlit as st
+import numpy as np
+from ultralytics import YOLO
+import cv2
+import math
+from PIL import Image
 
-# Local Modules
-import settings
-import helper
+# Load YOLOv5 model with the specified weights
+model = YOLO("best.ptt")
 
-# Setting page layout
-st.set_page_config(
-    page_title="Object Detection using YOLOv8",
-    page_icon="🤖",
-    layout="wide",
-    initial_sidebar_state="expanded"
-)
+# Empty list to store class names
+class_names = []
 
-# Main page heading
-st.title("Object Detection And Tracking using YOLOv8")
+# Read class names from the coco.names file
+with open("coco.names", 'rt') as f:
+    class_names = f.read().rstrip('\n').split('\n')
 
-# Sidebar
-st.sidebar.header("ML Model Config")
+# Function for object detection using YOLOv5 model
+def find(objects, img):
+    for det in objects.pandas().xyxy[0].to_numpy():
+        x, y, w, h, conf, cls = det
+        cv2.rectangle(img, (int(x), int(y)), (int(w), int(h)), (0, 0, 255), 3)
+        cv2.putText(img, f'{class_names[int(cls)]} {int(conf*100)}%', (int(x), int(y-10), cv2.FONT_HERSHEY_DUPLEX, 1, (0, 0, 255), 2)
+    return img
 
-# Model Options
-model_type = st.sidebar.radio(
-    "Select Task", ['Detection'])
+# Initialize YOLOv5 model
+model.initialize()
 
-confidence = float(st.sidebar.slider(
-    "Select Model Confidence", 25, 100, 40)) / 100
-
-# Selecting Detection Or Segmentation
-if model_type == 'Detection':
-    model_path = Path(settings.DETECTION_MODEL)
-elif model_type == 'Segmentation':
-    model_path = Path(settings.SEGMENTATION_MODEL)
-
-# Load Pre-trained ML Model
-try:
-    model = helper.load_model(model_path)
-except Exception as ex:
-    st.error(f"Unable to load model. Check the specified path: {model_path}")
-    st.error(ex)
-
-st.sidebar.header("Image/Video Config")
-if st.button('WEBCAM'):
-    helper.play_webcam(confidence, model)
-
-source_img = None
-# If image is selected
-
-#elif source_radio == settings.VIDEO:
-    #helper.play_stored_video(confidence, model)
-
-#elif source_radio == settings.WEBCAM:
-    #helper.play_webcam(confidence, model)
-
-#elif source_radio == settings.RTSP:
-    #helper.play_rtsp_stream(confidence, model)
-
-#elif source_radio == settings.YOUTUBE:
-  # helper.play_youtube_video(confidence, model)
-
+# Main loop for object detection using YOLOv5
+while True:
+    ret, frame = cap.read()
+    
+    # Perform object detection with YOLOv5
+    with st.spinner('Detecting objects...'):
+        results = model(frame)
+    
+    # Display annotated frame with detections
+    frame_annotated = find(results, frame)
+    
+    # Display the annotated frame in the Streamlit app
+    st.image(frame_annotated, channels="BGR")
