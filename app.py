@@ -16,4 +16,3 @@ def video_frame_callback(frame):
 
 webrtc_streamer(key="example", video_frame_callback=video_frame_callback)
 
-webrtc_streamer(key="example", video_frame_callback=video_frame_callback)
