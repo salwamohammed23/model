@@ -50,7 +50,7 @@ with tab1:
     elif APPLICATION_MODE == "Upload Picture":
         uploaded_file = st.sidebar.file_uploader("Drop a JPG/PNG file", accept_multiple_files=False, type=['jpg', 'png'])
         if uploaded_file is not None:
-            new_file_name = "media-directory/ALL-OF-MY-SCORPIONS-mp4_001173520_png.rf.268a30032134ccc8d2ecc0fc4857ffe6.jpg"
+            new_file_name = "ALL-OF-MY-SCORPIONS-mp4_001173520_png.rf.268a30032134ccc8d2ecc0fc4857ffe6.jpg"
             with open(os.path.join("./media-directory/", new_file_name), "wb") as f:
                 f.write(uploaded_file.getbuffer())
             img_file = os.path.join("./media-directory/", new_file_name)
