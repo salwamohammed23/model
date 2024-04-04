@@ -74,6 +74,7 @@ with tab1:
     st.sidebar.markdown('')
     st.markdown('##### Slider of Uploaded Image and Segments')
     img_file = ".media-directory/ALL-OF-MY-SCORPIONS-mp4_001173520_png.rf.268a30032134ccc8d2ecc0fc4857ffe6.jpg"
+    img = "media-directory/These SCORPIONS are Truly DEADLY!.mp4_000071920.png"
     image_comparison(
         img1=img_file,
         img2=img,
