@@ -34,8 +34,8 @@ with tab1:
                 st.sidebar.success("Saved File")
         st.write("Click on **Clear photo** to retake picture")
 
-        if os.path.exists("./media-directory/media-directory/ALL-OF-MY-SCORPIONS-mp4_001173520_png.rf.268a30032134ccc8d2ecc0fc4857ffe6.jpg"):
-            img_file = "./media-directory/media-directory/ALL-OF-MY-SCORPIONS-mp4_001173520_png.rf.268a30032134ccc8d2ecc0fc4857ffe6.jpg"
+        if os.path.exists("./media-directory/ALL-OF-MY-SCORPIONS-mp4_001173520_png.rf.268a30032134ccc8d2ecc0fc4857ffe6.jpg"):
+            img_file = "./media-directory/ALL-OF-MY-SCORPIONS-mp4_001173520_png.rf.268a30032134ccc8d2ecc0fc4857ffe6.jpg"
             results = model(img_file)
             img = cv2.imread(img_file)
 
@@ -73,6 +73,7 @@ with tab1:
 
     st.sidebar.markdown('')
     st.markdown('##### Slider of Uploaded Image and Segments')
+    img_file = ".media-directory/ALL-OF-MY-SCORPIONS-mp4_001173520_png.rf.268a30032134ccc8d2ecc0fc4857ffe6.jpg"
     image_comparison(
         img1=img_file,
         img2=img,
