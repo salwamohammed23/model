@@ -12,3 +12,6 @@ matplotlib
 streamlit-webrtc
 
 numpy
+
+av
+pytube
