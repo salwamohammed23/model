@@ -42,13 +42,13 @@ zone_polygon_m = np.array([[160, 100],
 
 
 # Initialize the YOLOv8 model
-# model = YOLO("best (3).pt")
+# model = YOLO("best (1).pt")
 @st.cache_resource
-def load_yolo_model():
-    return YOLO("best.pt")
+#def load_yolo_model():
+  #  return YOLO("best.pt")
 
 # Load the YOLO model (this will be cached)
-model = load_yolo_model()
+model = YOLO("best (1).pt")
 
 # Initialize the tracker, annotators and zone
 tracker = sv.ByteTrack()
