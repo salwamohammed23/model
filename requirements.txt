@@ -15,3 +15,12 @@ numpy
 
 av
 pytube
+
+av==10.0.0
+numpy==1.25.2
+
+Requests==2.31.0
+
+streamlit_webrtc==0.47.1
+supervision==0.16.0
+
