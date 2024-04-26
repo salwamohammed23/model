@@ -1,67 +1,41 @@
-# code based on: https://github.com/xugaoxiang/yolov5-streamlit
-# Adapted to use with Yolov8
-from utils import get_detection_folder, check_folders
-import redirect as rd
-
-from pathlib import Path
+from ultralytics import YOLO
 import streamlit as st
 from PIL import Image
-import subprocess
+import numpy as np
+import openai
+import cv2
 import os
+import requests
+from streamlit_lottie import st_lottie
 
-# This will check if we have all the folders to save our files for inference
-check_folders()
 
-if __name__ == '__main__':
+st.title("FireWatch AI")
+def predict_with_yolov8(img_bytes):
+    # Load the YOLOv8 model
+    model = YOLO('def predict_with_yolov8(img_bytes):
+    # Load the YOLOv8 model
+    model = YOLO('skin_can.pt')
+
+    # Convert the image bytes to PIL image
+    pil_image = Image.open(img_bytes)
+
+    # Run YOLOv8 segmentation on the image
+    results = model.predict(pil_image, imgsz=600,conf=0.3, iou=0.5)
+    # Get the path of the new image saved by YOLOv8
+    # Assuming inference[0] is the Results object
+    res_plotted = results[0].plot()[:, :, ::-1]
+    pred= results[0].boxes.cls
     
-    st.title('YOLOv8 Streamlit App')
+    return res_plotted,pred')
 
-    source = ("Image", "Video")
-    source_index = st.sidebar.selectbox("Select Input type", range(
-        len(source)), format_func=lambda x: source[x])
+    # Convert the image bytes to PIL image
+    pil_image = Image.open(img_bytes)
+
+    # Run YOLOv8 segmentation on the image
+    results = model.predict(pil_image, imgsz=600,conf=0.3, iou=0.5)
+    # Get the path of the new image saved by YOLOv8
+    # Assuming inference[0] is the Results object
+    res_plotted = results[0].plot()[:, :, ::-1]
+    pred= results[0].boxes.cls
     
-    
-    
-    if source_index == 0:
-        uploaded_file = st.sidebar.file_uploader(
-            "Load File", type=['png', 'jpeg', 'jpg'])
-        if uploaded_file is not None:
-            is_valid = True
-            with st.spinner(text='Loading...'):
-                st.sidebar.image(uploaded_file)
-                picture = Image.open(uploaded_file)
-                picture = picture.save(f'data/images/{uploaded_file.name}')
-                source = f'data/images/{uploaded_file.name}'
-        else:
-            is_valid = False
-    else:
-        uploaded_file = st.sidebar.file_uploader("Upload Video", type=['mp4'])
-        if uploaded_file is not None:
-            is_valid = True
-            with st.spinner(text='Loading...'):
-                st.sidebar.video(uploaded_file)
-                with open(os.path.join("data", "videos", uploaded_file.name), "wb") as f:
-                    f.write(uploaded_file.getbuffer())
-                source = f'data/videos/{uploaded_file.name}'
-        else:
-            is_valid = False
-
-    if is_valid:
-        print('valid')
-        if st.button('Detect'):
-            with rd.stderr(format='markdown', to=st.sidebar), st.spinner('Wait for it...'):
-                print(subprocess.run(['yolo', 'task=detect', 'mode=predict', 'model=yolov8n.pt', 'conf=0.25', 'source={}'.format(source)],capture_output=True, universal_newlines=True).stderr)
-
-                    
-            if source_index == 0:
-                with st.spinner(text='Preparing Images'):
-                    for img in os.listdir(get_detection_folder()):
-                        st.image(str(Path(f'{get_detection_folder()}') / img))
-
-                    st.balloons()
-            else:
-                with st.spinner(text='Preparing Video'):
-                    for vid in os.listdir(get_detection_folder()):
-                        st.video(str(Path(f'{get_detection_folder()}') / vid))
-
-                    st.balloons()
+    return res_plotted,pred
