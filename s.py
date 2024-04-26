@@ -3,7 +3,8 @@ import streamlit as st
 from PIL import Image 
 import numpy as np
 
-import cv2 import os import requests
+import cv2 
+import os import requests
 
 st.title("skin_canser") def predict_with_yolov8(img_bytes): # Load the YOLOv8 model model = YOLO('skin_can.pt')
 
