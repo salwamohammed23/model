@@ -55,7 +55,7 @@ if uploaded_file is not None:
             else:
                 st.markdown("**Smoke Detected!**")
 
-            with tab:    
+            with tab2:    
                 st.title("FireWatch AI")
            
                 
