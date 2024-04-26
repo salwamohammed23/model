@@ -3,6 +3,7 @@ import streamlit as st
 from PIL import Image
 
 # Function to predict with YOLOv8
+model = YOLO('skin_can.pt')
 def predict_with_yolov8(img_bytes):
     # Load the YOLOv8 model
     model = YOLO('skin_can.pt')
@@ -43,7 +44,7 @@ if uploaded_file is not None:
 
     with tab2:    
         st.title("Webcam")
-        model = YOLO('skin_can.pt')
+        
         with st.expander("Start Camera"):
             camera_image = st.camera_input("Camera")
         if camera_image:
