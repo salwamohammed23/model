@@ -43,11 +43,12 @@ if uploaded_file is not None:
 
     with tab2:    
         st.title("Webcam")
+         model = YOLO('skin_can.pt')
         with st.expander("Start Camera"):
             camera_image = st.camera_input("Camera")
         if camera_image:
             img = Image.open(camera_image)
-            gray_scale, predictions = predict_with_yolov8(img)
+            gray_scale, predictions = model.predict(img)
             st.image(gray_scale, caption="Webcam Image")
             st.markdown("**Predictions:**")
             st.write(predictions)
