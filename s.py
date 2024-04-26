@@ -42,10 +42,20 @@ uploaded_file = st.file_uploader("Upload an image", type=["jpg", "jpeg", "png"])
 
 # Predict with YOLOv8 and Openai API
 if uploaded_file is not None:
-        tab1, tab2,tab3 = st.tabs(["Smoke Detection", "News Article","Awarness"])
+        tab1, tab2 = st.tabs(["Skin_canser Detection", "News Article"])
         out_img, out_name = predict_with_yolov8(uploaded_file)
 
         with tab1:
+            st.image(out_img, use_column_width=True,caption="Image")
+            
+            if out_name.numel()==0:
+                st.markdown("**No Smoke Detected.**")
+              
+                
+            else:
+                st.markdown("**Smoke Detected!**")
+
+            with tab:    
             st.title("FireWatch AI")
            
                 
