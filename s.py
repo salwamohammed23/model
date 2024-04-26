@@ -9,7 +9,7 @@ import requests
 from streamlit_lottie import st_lottie
 
 
-st.title("FireWatch AI")
+st.title("skin_canser")
 def predict_with_yolov8(img_bytes):
     # Load the YOLOv8 model
     model = YOLO('def predict_with_yolov8(img_bytes):
@@ -39,3 +39,19 @@ def predict_with_yolov8(img_bytes):
     pred= results[0].boxes.cls
     
     return res_plotted,pred
+
+uploaded_file = st.file_uploader("Upload an image", type=["jpg", "jpeg", "png"])
+
+# Predict with YOLOv8 and Openai API
+if uploaded_file is not None:
+        tab1, tab2,tab3 = st.tabs(["Smoke Detection", "News Article","Awarness"])
+        out_img, out_name = predict_with_yolov8(uploaded_file)
+
+        with tab1:
+            st.title("FireWatch AI")
+           
+                
+        
+       
+
+    
