@@ -57,9 +57,12 @@ if uploaded_file is not None:
 
             with tab2:    
                 st.title("webcam")
-                camera = st.camera_input("Take a picture!")
-                if camera:
-                    image_bytes = camera.getvalue()
+                with st.expander("Start Camera"):
+                    camera_image=st.camera_input("camera")
+                if camera_image:
+                    img=Image.open(camera_image)
+                    gray_scale=predict_with_yolov8(img_bytes)
+                    st.image(gray_scale)
 
            
                 
