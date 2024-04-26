@@ -12,8 +12,6 @@ from streamlit_lottie import st_lottie
 st.title("skin_canser")
 def predict_with_yolov8(img_bytes):
     # Load the YOLOv8 model
-    model = YOLO('def predict_with_yolov8(img_bytes):
-    # Load the YOLOv8 model
     model = YOLO('skin_can.pt')
 
     # Convert the image bytes to PIL image
@@ -26,7 +24,7 @@ def predict_with_yolov8(img_bytes):
     res_plotted = results[0].plot()[:, :, ::-1]
     pred= results[0].boxes.cls
     
-    return res_plotted,pred')
+    return res_plotted,pred
 
     # Convert the image bytes to PIL image
     pil_image = Image.open(img_bytes)
