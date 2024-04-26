@@ -27,7 +27,7 @@ def predict_with_yolov8(img_bytes):
 
 uploaded_file = st.file_uploader("Upload an image", type=["jpg", "jpeg", "png"])
 
-Predict with YOLOv8 and Openai API
+#Predict with YOLOv8 and Openai API
 if uploaded_file is not None: tab1, tab2 = st.tabs(["Skin_canser Detection", "webcam"]) out_img, out_name = predict_with_yolov8(uploaded_file)
 
 with tab1:
