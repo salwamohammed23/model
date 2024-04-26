@@ -2,12 +2,11 @@ from ultralytics import YOLO
 import streamlit as st
 from PIL import Image
 
-# Function to predict with YOLOv8
+# Load the YOLOv8 model
 model = YOLO('skin_can.pt')
-def predict_with_yolov8(img_bytes):
-    # Load the YOLOv8 model
-    model = YOLO('skin_can.pt')
 
+# Function to predict with YOLOv8
+def predict_with_yolov8(img_bytes):
     # Convert the image bytes to PIL image
     pil_image = Image.open(img_bytes)
 
@@ -29,7 +28,7 @@ uploaded_file = st.file_uploader("Upload an image", type=["jpg", "jpeg", "png"])
 
 # Perform prediction on uploaded image
 if uploaded_file is not None:
-    tab1, tab2 = st.tabs(["Skin Cancer Detection", "Webcam"])
+    tab1, tab2 = st.columns(["Skin Cancer Detection", "Webcam"])
 
     # Prediction on uploaded image
     out_img, out_name = predict_with_yolov8(uploaded_file)
@@ -53,7 +52,6 @@ if uploaded_file is not None:
             st.image(predictions)
             st.markdown("**Predictions:**")
             st.write(predictions)
-                
         
        
 
