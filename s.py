@@ -49,8 +49,8 @@ if uploaded_file is not None:
             camera_image = st.camera_input("Camera")
         if camera_image:
             img = Image.open(camera_image)
-            gray_scale, predictions = model.predict(img)
-            st.image(gray_scale, caption="Webcam Image")
+            predictions = model.predict(img)
+            st.image(predictions)
             st.markdown("**Predictions:**")
             st.write(predictions)
                 
