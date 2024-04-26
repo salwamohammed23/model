@@ -43,7 +43,7 @@ if uploaded_file is not None:
 
     with tab2:    
         st.title("Webcam")
-         model = YOLO('skin_can.pt')
+        model = YOLO('skin_can.pt')
         with st.expander("Start Camera"):
             camera_image = st.camera_input("Camera")
         if camera_image:
