@@ -61,7 +61,7 @@ if uploaded_file is not None:
                     camera_image=st.camera_input("camera")
                 if camera_image:
                     img=Image.open(camera_image)
-                    gray_scale=predict_with_yolov8(img_bytes)
+                    gray_scale=predict_with_yolov8(img)
                     st.image(gray_scale)
 
            
