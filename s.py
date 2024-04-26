@@ -26,4 +26,11 @@ st.title("Skin Cancer Detection")
 # User image upload
 uploaded_file = st.file_uploader("Upload an image", type=["jpg", "jpeg", "png"])
 out_img, out_name = predict_with_yolov8(uploaded_file)
+st.image(out_img, use_column_width=True, caption="Image")
+
+if out_name.numel() == 0:
+    st.markdown("**No Skin Cancer Detected.**")
+else:
+     st.markdown("**Skin Cancer Detected!**")
+# Perform prediction on uploaded image
 
