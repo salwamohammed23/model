@@ -5,7 +5,7 @@ from PIL import Image
 # Function to predict with YOLOv8
 def predict_with_yolov8(img_bytes):
     # Load the YOLOv8 model
-    model = YOLO('model_- 6 june 2024 2_56.pt')
+    model = YOLO('best (2).pt')
 
     # Convert the image bytes to PIL image
     pil_image = Image.open(img_bytes)
